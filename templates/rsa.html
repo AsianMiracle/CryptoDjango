@@ -1,0 +1,26 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+
+<head>
+  <link rel="stylesheet" href="{% static 'css/rsa.css' %}" />
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/axios@0.20.0/dist/axios.min.js"></script>
+</head>
+
+
+<div class="rsa-page" id="app">
+  <div class="form">
+    <li v-for='(value, key) in Response' style='text-align: left;'>
+      [[ key ]]: [[ value ]]
+    </li>
+    <input class="form-control" v-model="bitsize" placeholder="Битность" @keyup.enter='rsasend'/>
+    <input class="form-control" v-model="mess" placeholder="Шифруемое сообщение" @keyup.enter='rsasend'/>
+    <button :class="['btn', isResponse ? 'btn-success' : 'btn-primary']" @click="rsasend">Шифрование</button>
+    <button :class="['btn', isResponse ? 'btn-success' : 'btn-primary']" @click="rsasign">Подпись</button>
+    </form>
+  </div>
+</div>
+
+<script type="text/javascript" src="{% static 'js/rsa.js' %}"></script>
+
+
+{% endblock content %}
