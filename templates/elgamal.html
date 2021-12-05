@@ -8,14 +8,12 @@
 
 <div class="elgamal-page" id="app">
   <div class="form">
-    <li v-for='(value, key) in Response' style='text-align: left;'>
-      [[ key ]]: [[ value ]]
-    </li>
-
     <input class="form-control" v-model="bitsize" placeholder="Битность" @keyup.enter='send'/>
     <input class="form-control" v-model="mess" placeholder="Шифруемое сообщение" @keyup.enter='send'/>
     <button :class="['btn', isResponse ? 'btn-success' : 'btn-primary']" @click="send">Зашифровать</button>
-    </form>
+    <li v-for='(value, key) in Response' style='text-align: left;'>
+      [[ key ]]: [[ value ]]
+    </li>
   </div>
 </div>
 

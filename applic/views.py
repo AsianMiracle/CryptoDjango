@@ -31,7 +31,9 @@ def send(request):
     (C_ , C__ ), R = cipher.encrypt(M,y)
     Z,Z_inv,M_ = cipher.decrypt(C_,C__,x)
     return JsonResponse({
-        'message': {'x': str(x), 'y': str(y), "C'":str(C_), "C''":str(C__), "Z":str(Z), "M'":M_.decode('utf-8')}
+        'message': {'p': str(cipher.p), 'g':str(cipher.g), \
+                    'x': str(x), 'y': str(y), "C'":str(C_), "C''":str(C__), \
+                    "R":str(R),"Z":str(Z), "Z'":str(Z_inv),"M'":M_.decode('utf-8')}
     }, safe=False)
 
 @csrf_exempt
@@ -45,7 +47,9 @@ def rsasend(request):
     C = cipher.encrypt(M)
     M_ = cipher.decrypt(C)
     return JsonResponse({
-        'message': {'C': str(hex(C).split('x')[-1]), "M'":M_.decode('utf-8')}
+        'message': {'p':str(cipher.p), 'q':str(cipher.q), 'n':str(cipher.n),\
+                    'phi':str(cipher.phi), 'e':str(cipher.e), 'd':str(cipher.d),
+                    'C (hex)': str(hex(C).split('x')[-1]), "M'":M_.decode('utf-8')}
     }, safe=False)
 
 @csrf_exempt
@@ -70,7 +74,11 @@ def rabinsend(request):
 
     cipher = Rabin(bitsize)
     C = cipher.encrypt(M)
-    #M_ = cipher.decrypt(C)
+    mp1,mq1,mp2,mq2,a,b,M_ = cipher.decrypt(C)
+    M__ = [i for i in M_ if i[:4] == b"Mes:"][0][4:].decode('utf-8')
     return JsonResponse({
-        'message': {'C': str(C)}
+        'message': {'p':str(cipher.p), 'q':str(cipher.q), 'n':str(cipher.n), \
+                    'mp1':str(mp1), 'mq1':str(mq1), 'mp2':str(mp2), \
+                    'mq2':str(mq2), 'a':str(a), 'b':str(b),\
+                    'C (hex)': str(hex(C).split('x')[-1]), "M'":M__}
     }, safe=False)

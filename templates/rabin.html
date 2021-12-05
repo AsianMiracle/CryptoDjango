@@ -8,14 +8,13 @@
 
 <div class="rabin-page" id="app">
   <div class="form">
-    <li v-for='(value, key) in Response' style='text-align: left;'>
-      [[ key ]]: [[ value ]]
-    </li>
-
     <input class="form-control" v-model="bitsize" placeholder="Битность" @keyup.enter='rabinsend'/>
     <input class="form-control" v-model="mess" placeholder="Шифруемое сообщение" @keyup.enter='rabinsend'/>
     <button :class="['btn', isResponse ? 'btn-success' : 'btn-primary']" @click="rabinsend">Зашифровать</button>
-    </form>
+    <hr>
+    <li v-for='(value, key) in Response' style='text-align: left;'>
+      [[ key ]]: [[ value ]]
+    </li>  
   </div>
 </div>
 
